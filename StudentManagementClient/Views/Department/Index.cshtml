@@ -1,0 +1,55 @@
+﻿@model IEnumerable<StudentManagmentServer.Models.Department>
+    <h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DepartmentCode)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DepartmentCode)
+            </td>
+            <td>
+
+                <a href="@Url.Action("Edit","Department",new {id=item.DepartmentID})" class="btn btn-default">Edit</a>|
+
+                <a onclick="Delete(@item.DepartmentID)" class="btn btn-default">Delete</a>
+            </td>
+        </tr>
+    }
+
+</table>
+@section scripts{
+    <script>
+        $(function () {
+
+            var successMassage ='@TempData["SuccessMessage"]'
+
+            if (successMassage != '')
+                alertify.success(successMassage);
+
+        });
+        function Delete(id) {
+            alertify.confirm('Student Managment System', 'Are you sure to Delete this Record? ', function () {
+
+              window.location.href = '@Url.Action("Delete","Department")/' + id;
+
+            }, null);
+        }
+
+    </script>
+}
